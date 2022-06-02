@@ -1,0 +1,6 @@
+name: ItemMail
+version: '${project.version}'
+main: gaya.pe.kr.core.ItemMail
+api-version: 1.18
+authors: [ Gaya_Soft ]
+description: 우편물 플러그인
