@@ -17,6 +17,15 @@ public class PlayerUtil {
         return null;
     }
 
+    public static UUID getPlayerUUID(String targetPlayerName) {
+        for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+            if ( offlinePlayer.getName().equals(targetPlayerName) ) {
+                return offlinePlayer.getUniqueId();
+            }
+        }
+        return null;
+    }
+
     public static Player getPlayer(Player player, String targetPlayerName) {
         Player targetPlayer = Bukkit.getPlayer(targetPlayerName);
         if (targetPlayer != null) {

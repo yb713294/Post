@@ -10,6 +10,7 @@ import gaya.pe.kr.mail.option.FrameIcon;
 import gaya.pe.kr.mail.option.PostType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -64,7 +65,7 @@ public class MailBox extends MinecraftInventoryListener {
             getInventory().setItem(29, FrameIcon.ENABLE_PREVIOUS_PAGE.getItemStack()); // 이전 페이지 활성화
         }
 
-        getInventory().setItem(31, ItemModifier.setDisplayName(FrameIcon.NOW_PAGE.getItemStack(), Integer.toString(page))); // 나가기
+        getInventory().setItem(31, FrameIcon.NOW_PAGE.getItemStack()); // 나가기
 
         if ( size >= lastIndex ) {
             getInventory().setItem(33, FrameIcon.ENABLE_NEXT_PAGE.getItemStack()); // 이후 페이지 활성화
@@ -82,39 +83,41 @@ public class MailBox extends MinecraftInventoryListener {
     @EventHandler
     public void clickInventory(InventoryClickEvent event ) {
 
-            if ( isAccessible(event) ) {
-                event.setCancelled(true);
-                ItemStack clickedItem = event.getCurrentItem();
-                if ( !Filter.isNullOrAirItem(clickedItem) ) {
+        if (isAccessible(event, true)) {
+            ItemStack clickedItem = event.getCurrentItem();
+            if (!Filter.isNullOrAirItem(clickedItem)) {
 
-                    int clickedSlot = event.getSlot();
-                    event.setCancelled(true);
+                int clickedSlot = event.getSlot();
 
-                    if ( clickedSlot > 26 ) {
-                        // 각종 옵션들을 클릭함
-                        switch ( clickedSlot ) {
-                            case 29 -> {
-                                page--;
-                                if ( !open() ) {
-                                    page++;
-                                }
-                            }
-                            case 33 -> {
+                if (clickedSlot > 26) {
+
+                    // 각종 옵션들을 클릭함
+                    switch (clickedSlot) {
+                        case 29 -> {
+                            page--;
+                            if (!open()) {
                                 page++;
-                                if ( !open() ) {
-                                    page--;
-                                }
                             }
                         }
-                    } else {
-                        // 아이템을 뺄 수 있도록함
-                        ItemStack result = playerMail.getItem(clickedItem);
-                        UtilMethod.addPlayerItem(getPlayer(), result);
+                        case 31 -> {
+                            getPlayer().closeInventory();
+                        }
+                        case 33 -> {
+                            page++;
+                            if (!open()) {
+                                page--;
+                            }
+                        }
                     }
-
-
+                } else {
+                    // 아이템을 뺄 수 있도록함
+                    ItemStack result = playerMail.getItem(clickedItem);
+                    UtilMethod.addPlayerItem(getPlayer(), result);
                 }
+
+
             }
+        }
 
 
     }

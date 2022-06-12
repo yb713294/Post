@@ -1,13 +1,17 @@
 package gaya.pe.kr.core.util.abstaract;
 
+import gaya.pe.kr.core.util.SchedulerUtil;
 import gaya.pe.kr.core.util.method.EventUtil;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 public abstract class MinecraftInventoryListener implements Listener {
 
@@ -60,11 +64,29 @@ public abstract class MinecraftInventoryListener implements Listener {
 
     }
 
-    protected boolean isAccessible(InventoryClickEvent event) {
+
+    protected boolean isAccessible(InventoryClickEvent event, boolean autoCancel) {
         Player player = (Player) event.getWhoClicked();
         Inventory clickedInventory = event.getClickedInventory();
         if ( clickedInventory == null) return true;
-        return isPlayerInteraction(player, clickedInventory);
+        if ( isPlayerInteraction(player, clickedInventory) ) {
+
+            if ( autoCancel ) {
+                event.setCancelled(true);
+                event.setResult(Event.Result.DENY);
+            }
+
+            InventoryAction inventoryAction = event.getAction();
+            if ( inventoryAction.equals(InventoryAction.HOTBAR_SWAP) || inventoryAction.equals(InventoryAction.HOTBAR_MOVE_AND_READD) ) {
+                PlayerInventory playerInventory = player.getInventory();
+                ItemStack beforeItem = playerInventory.getItemInOffHand();
+                SchedulerUtil.runTaskLater(()-> playerInventory.setItemInOffHand(beforeItem), 2);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

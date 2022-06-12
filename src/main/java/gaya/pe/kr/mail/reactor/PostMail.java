@@ -7,6 +7,7 @@ import gaya.pe.kr.mail.data.PlayerMail;
 import gaya.pe.kr.mail.option.FrameIcon;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -66,18 +67,23 @@ public class PostMail extends MinecraftInventoryListener {
     @EventHandler
     public void clickInventory(InventoryClickEvent event) {
 
-        if ( isAccessible(event) ) {
-
+        if ( isAccessible(event, false) ) {
             int clickedIndex = event.getSlot();
             if ( clickedIndex > 26 ) {
                 event.setCancelled(true);
+                event.setResult(Event.Result.DENY);
                 switch ( clickedIndex ) {
                     case 30 -> getPlayer().closeInventory();
                     case 32 -> {
-                        getTargetPlayerMail().addMail(getPlayer(), getInventoryItems());
-                        getPlayer().sendMessage("§6성공적으로 메일을 보냈습니다");
-                        sendData = true;
-                        getPlayer().closeInventory();
+                        List<ItemStack> mailItemList = getInventoryItems();
+                        if ( mailItemList.isEmpty() ) {
+                            getPlayer().sendMessage("§c보낼 유편물이 없습니다");
+                        } else {
+                            getTargetPlayerMail().addMail(getPlayer(), mailItemList);
+                            getPlayer().sendMessage("§6성공적으로 메일을 보냈습니다");
+                            sendData = true;
+                            getPlayer().closeInventory();
+                        }
                     }
                 }
             }

@@ -12,9 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -72,7 +72,7 @@ public class AllPlayerPost extends MinecraftInventoryListener {
         }
 
         getInventory().setItem(47, FrameIcon.ONLINE_BUTTON.getItemStack()); // 온라인 버튼
-        getInventory().setItem(49, ItemModifier.setDisplayName(FrameIcon.NOW_PAGE.getItemStack(), Integer.toString(page))); // 나가기
+        getInventory().setItem(49, FrameIcon.NOW_PAGE.getItemStack()); // 나가기
         getInventory().setItem(51, FrameIcon.OFFLINE_BUTTON.getItemStack()); // 오프라인 버튼
 
         if ( size >= lastIndex ) {
@@ -93,17 +93,13 @@ public class AllPlayerPost extends MinecraftInventoryListener {
     @EventHandler
     public void clickInventory(InventoryClickEvent event ) {
 
-        if ( isAccessible(event) ) {
-            event.setCancelled(true);
+        if ( isAccessible(event, true) ) {
             ItemStack clickedItem = event.getCurrentItem();
-
             if ( !Filter.isNullOrAirItem(clickedItem) ) {
-
                 int clickedSlot = event.getSlot();
-                event.setCancelled(true);
-
                 if ( clickedSlot > 44 ) {
                     // 각종 옵션들을 클릭함
+
                     switch ( clickedSlot ) {
                         case 45 -> {
                             page--;
@@ -115,6 +111,7 @@ public class AllPlayerPost extends MinecraftInventoryListener {
                             AllPlayerPost allPlayerPost = new AllPlayerPost(getPlayer(), PostType.ONLINE);
                             allPlayerPost.open();
                         }
+                        case 49 -> getPlayer().closeInventory();
                         case 51 -> {
                             AllPlayerPost allPlayerPost = new AllPlayerPost(getPlayer(), PostType.OFFLINE);
                             allPlayerPost.open();
