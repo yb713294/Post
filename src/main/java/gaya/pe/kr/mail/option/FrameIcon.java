@@ -10,7 +10,7 @@ public enum FrameIcon {
     DISABLE_PREVIOUS_PAGE(ItemModifier.createItemStack(Material.BONE, 1035, "&7[ &x&9&3&8&d&9&4&l이전 &7]", null)),
     ENABLE_NEXT_PAGE(ItemModifier.createItemStack(Material.BONE, 1032, "&7[ &6&l다음 &7]", null)),
     DISABLE_NEXT_PAGE(ItemModifier.createItemStack(Material.BONE, 1033, "&7[ &x&9&3&8&d&9&4&l다음 &7]", null)),
-    NOW_PAGE(ItemModifier.createItemStack(Material.BONE, 1023, "", null)),
+    NOW_PAGE(ItemModifier.createItemStack(Material.BONE, 1036, "", null)),
     BLANK(ItemModifier.createItemStack(Material.BONE, 1023, " ", null)),
     ONLINE_BUTTON(ItemModifier.createItemStack(Material.LIME_STAINED_GLASS_PANE, 0, "&a온라인 플레이어", null)),
     OFFLINE_BUTTON(ItemModifier.createItemStack(Material.RED_STAINED_GLASS_PANE, 0, "&7오프라인 플레이어", null)),
