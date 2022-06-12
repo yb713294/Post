@@ -77,7 +77,7 @@ public class PostMail extends MinecraftInventoryListener {
                     case 32 -> {
                         List<ItemStack> mailItemList = getInventoryItems();
                         if ( mailItemList.isEmpty() ) {
-                            getPlayer().sendMessage("§c보낼 유편물이 없습니다");
+                            getPlayer().sendMessage("§c보낼 우편물이 없습니다");
                         } else {
                             getTargetPlayerMail().addMail(getPlayer(), mailItemList);
                             getPlayer().sendMessage("§6성공적으로 메일을 보냈습니다");

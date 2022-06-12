@@ -93,6 +93,21 @@ public class AllPlayerPost extends MinecraftInventoryListener {
     @EventHandler
     public void clickInventory(InventoryClickEvent event ) {
 
+        Inventory clickedInventory = event.getClickedInventory();
+        if ( clickedInventory == null ) return;
+
+        Inventory nowInventory = event.getInventory();
+
+        if ( nowInventory.equals(getInventory()) ) {
+            if ( clickedInventory.equals(getPlayer().getInventory()) ) {
+                event.setCancelled(true);
+                event.setResult(Event.Result.DENY);
+                getPlayer().sendMessage("§c접근할 수 없는 경로입니다");
+                return;
+            }
+        }
+
+
         if ( isAccessible(event, true) ) {
             ItemStack clickedItem = event.getCurrentItem();
             if ( !Filter.isNullOrAirItem(clickedItem) ) {
