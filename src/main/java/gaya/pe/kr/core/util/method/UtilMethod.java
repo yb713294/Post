@@ -17,12 +17,8 @@ public class UtilMethod {
     public static int getPlayerRemainInventory(ItemStack[] itemStacks) {
         int count = 0;
         for (ItemStack content : itemStacks) {
-            if ( content == null ) {
+            if ( Filter.isNullOrAirItem(content) ) {
                 count++;
-            } else {
-                if ( content.getType().equals(Material.AIR) ) {
-                    count++;
-                }
             }
         }
         return count;
