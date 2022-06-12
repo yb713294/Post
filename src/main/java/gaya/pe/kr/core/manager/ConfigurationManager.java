@@ -1,6 +1,6 @@
 package gaya.pe.kr.core.manager;
 
-import gaya.pe.kr.core.ItemMail;
+import gaya.pe.kr.core.DellunaPostOffice;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -24,8 +24,8 @@ public class ConfigurationManager {
         return SingleTon.CONFIGURATION_MANAGER;
     }
 
-    Plugin plugin = ItemMail.getPlugin();
-    File pluginDataFolder = ItemMail.getPlugin().getDataFolder();
+    Plugin plugin = DellunaPostOffice.getPlugin();
+    File pluginDataFolder = DellunaPostOffice.getPlugin().getDataFolder();
 
     public FileConfiguration getConfiguration(String relativePath, String resourcePath) {
         File file = new File(pluginDataFolder, relativePath);
@@ -35,10 +35,10 @@ public class ConfigurationManager {
     public void saveConfiguration(FileConfiguration configuration, String relativePath) {
         try {
             configuration.save(new File(pluginDataFolder, relativePath));
-            ItemMail.log(String.format("&f[&6%s&f]의 파일이 &e성공적&f으로 저장 되었습니다", relativePath));
+            DellunaPostOffice.log(String.format("&f[&6%s&f]의 파일이 &e성공적&f으로 저장 되었습니다", relativePath));
         } catch (IOException e) {
             e.printStackTrace();
-            ItemMail.log(String.format("&f[&6%s&f]의 파일의 저장을 &4실패 했습니다", relativePath));
+            DellunaPostOffice.log(String.format("&f[&6%s&f]의 파일의 저장을 &4실패 했습니다", relativePath));
         }
 
     }
@@ -53,7 +53,7 @@ public class ConfigurationManager {
             Reader reader = new InputStreamReader(plugin.getResource(resourcePath), StandardCharsets.UTF_8);
             FileConfiguration fileConfiguration = YamlConfiguration.loadConfiguration(reader);
             fileConfiguration.save(path);
-            ItemMail.log(String.format("&f[ &b%s &f]의&f 설정파일이 정상 &e생성&f 되었습니다", path.getName()));
+            DellunaPostOffice.log(String.format("&f[ &b%s &f]의&f 설정파일이 정상 &e생성&f 되었습니다", path.getName()));
             return fileConfiguration;
         } catch (IOException e) {
             e.printStackTrace();

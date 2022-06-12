@@ -59,19 +59,17 @@ public class MailBox extends MinecraftInventoryListener {
         }
 
         if ( page <= 1 ) {
-            getInventory().setItem(28, FrameIcon.DISABLE_PREVIOUS_PAGE.getItemStack()); // 이전 페이지 비활성화
+            getInventory().setItem(29, FrameIcon.DISABLE_PREVIOUS_PAGE.getItemStack()); // 이전 페이지 비활성화
         } else {
-            getInventory().setItem(28, FrameIcon.ENABLE_PREVIOUS_PAGE.getItemStack()); // 이전 페이지 활성화
+            getInventory().setItem(29, FrameIcon.ENABLE_PREVIOUS_PAGE.getItemStack()); // 이전 페이지 활성화
         }
 
-        getInventory().setItem(30, FrameIcon.EXIT.getItemStack()); // 나가기
         getInventory().setItem(31, ItemModifier.setDisplayName(FrameIcon.NOW_PAGE.getItemStack(), Integer.toString(page))); // 나가기
-        getInventory().setItem(32, FrameIcon.SEND_MAIL_BUTTON.getItemStack()); // 나가기
-        
+
         if ( size >= lastIndex ) {
-            getInventory().setItem(34, FrameIcon.ENABLE_NEXT_PAGE.getItemStack()); // 이후 페이지 활성화
+            getInventory().setItem(33, FrameIcon.ENABLE_NEXT_PAGE.getItemStack()); // 이후 페이지 활성화
         } else {
-            getInventory().setItem(34, FrameIcon.DISABLE_NEXT_PAGE.getItemStack()); // 이후 페이지 비활성화
+            getInventory().setItem(33, FrameIcon.DISABLE_NEXT_PAGE.getItemStack()); // 이후 페이지 비활성화
         }
 
         getPlayer().openInventory(getInventory());
@@ -95,22 +93,13 @@ public class MailBox extends MinecraftInventoryListener {
                     if ( clickedSlot > 26 ) {
                         // 각종 옵션들을 클릭함
                         switch ( clickedSlot ) {
-                            case 28 -> {
+                            case 29 -> {
                                 page--;
                                 if ( !open() ) {
                                     page++;
                                 }
                             }
-                            case 30 -> {
-                                getPlayer().closeInventory();
-                                unRegister();
-                            }
-                            case 32 -> {
-                                AllPlayerPost allPlayerPost = new AllPlayerPost(getPlayer(), PostType.ONLINE);
-                                allPlayerPost.open();
-                                unRegister();
-                            }
-                            case 34 -> {
+                            case 33 -> {
                                 page++;
                                 if ( !open() ) {
                                     page--;

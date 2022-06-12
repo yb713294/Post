@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>gaya.pe.kr</groupId>
-    <artifactId>ItemMail</artifactId>
+    <artifactId>DellunaPostOffice</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 

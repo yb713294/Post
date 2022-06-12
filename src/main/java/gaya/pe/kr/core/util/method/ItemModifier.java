@@ -28,7 +28,7 @@ public class ItemModifier {
     public static ItemStack setDisplayName(ItemStack itemStack, String displayName) {
         if ( !Filter.isNullOrAirItem(itemStack) ) {
             ItemMeta itemMeta = itemStack.getItemMeta();
-            itemMeta.setDisplayName(displayName.replace("&", "§"));
+            itemMeta.setDisplayName("§f"+displayName.replace("&", "§"));
             itemStack.setItemMeta(itemMeta);
             return itemStack;
         }

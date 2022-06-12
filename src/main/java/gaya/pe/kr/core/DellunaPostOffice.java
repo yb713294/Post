@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.logging.Level;
 
-public final class ItemMail extends JavaPlugin {
+public final class DellunaPostOffice extends JavaPlugin {
 
     private static Plugin plugin;
     MailManager mailManager = MailManager.getInstance();

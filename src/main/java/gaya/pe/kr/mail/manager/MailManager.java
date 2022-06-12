@@ -1,11 +1,12 @@
 package gaya.pe.kr.mail.manager;
 
-import gaya.pe.kr.core.ItemMail;
+import gaya.pe.kr.core.DellunaPostOffice;
 import gaya.pe.kr.core.manager.ConfigurationManager;
 import gaya.pe.kr.core.util.SchedulerUtil;
 import gaya.pe.kr.core.util.filter.Filter;
 import gaya.pe.kr.core.util.method.*;
 import gaya.pe.kr.mail.command.MailCommand;
+import gaya.pe.kr.mail.command.PostMailCommand;
 import gaya.pe.kr.mail.data.PlayerMail;
 import gaya.pe.kr.mail.listener.PlayerConnection;
 import org.bukkit.ChatColor;
@@ -44,8 +45,9 @@ public class MailManager {
     NamespacedKey namespacedKey;
 
     public void init() {
-        namespacedKey = new NamespacedKey(ItemMail.getPlugin(), "item_owner_uuid");
-        ItemMail.registerCommand("우편함", new MailCommand());
+        namespacedKey = new NamespacedKey(DellunaPostOffice.getPlugin(), "item_owner_uuid");
+        DellunaPostOffice.registerCommand("우편함", new MailCommand());
+        DellunaPostOffice.registerCommand("우편보내기", new PostMailCommand());
         EventUtil.register(new PlayerConnection());
         loadConfiguration();
     }
@@ -96,10 +98,10 @@ public class MailManager {
                 count++;
             }
 
-            ItemMail.log(String.format("%d 명의 우편함 데이터가 로딩되었습니다", count));
+            DellunaPostOffice.log(String.format("%d 명의 우편함 데이터가 로딩되었습니다", count));
 
         } catch ( NullPointerException e ) {
-            ItemMail.log("플레이어 메일 데이터가 존재하지 않습니다ㅏ");
+            DellunaPostOffice.log("플레이어 메일 데이터가 존재하지 않습니다ㅏ");
         } catch (ParseException e) {
             e.printStackTrace();
         }

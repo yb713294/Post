@@ -1,6 +1,6 @@
 package gaya.pe.kr.core.util;
 
-import gaya.pe.kr.core.ItemMail;
+import gaya.pe.kr.core.DellunaPostOffice;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -13,7 +13,7 @@ public class SchedulerUtil {
         BUKKIT_SCHEDULER.cancelTask(taskId);
     }
 
-    private static final Plugin plugin = ItemMail.getPlugin();
+    private static final Plugin plugin = DellunaPostOffice.getPlugin();
 
     public static int scheduleRepeatingTask(final Runnable task, int delay, int interval) {
         return BUKKIT_SCHEDULER.scheduleSyncRepeatingTask(plugin, task, delay, interval);
